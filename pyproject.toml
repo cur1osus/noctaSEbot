@@ -1,15 +1,28 @@
 [project]
 name = "noctasebot"
 version = "0.1.0"
-description = "subscription tracking bot"
 readme = "README.md"
 requires-python = ">=3.12"
-dependencies = []
+dependencies = [
+    "aiogram>=3.18.0",
+    "aiosqlite>=0.21.0",
+    "alembic>=1.15.1",
+    "asyncpg>=0.30.0",
+    "fluent-runtime>=0.4.0",
+    "msgspec>=0.19.0",
+    "pydantic-settings>=2.8.1",
+    "redis[hiredis]>=5.2.1",
+    "sqlalchemy>=2.0.39",
+    "tzdata>=2025.1",
+]
+
+[tool.uv]
+package = false
 
 [tool.mypy]
 python_version = "3.12"
 mypy_path = "src_zoo_park"
-plugins = ["sqlalchemy.ext.mypy.plugin"]
+plugins = ["pydantic.mypy", "sqlalchemy.ext.mypy.plugin"]
 allow_redefinition = true
 check_untyped_defs = true
 disallow_any_generics = true
@@ -33,10 +46,14 @@ warn_unused_ignores = true
 disable_error_code = ["no-redef"]
 exclude = ["\\.?venv", "\\.idea", "\\.tests?"]
 
+[tool.pydantic-mypy]
+init_forbid_extra = true
+init_typed = true
+warn_required_dynamic_aliases = true
 
 [tool.ruff]
-src = ["src_zoo_park"]
-line-length = 88
+src = ["app"]
+line-length = 120
 exclude = [
     ".git",
     ".mypy_cache",
@@ -47,6 +64,45 @@ exclude = [
     "venv",
     ".venv",
 ]
+
+[tool.ruff.lint]
+select = ["ALL"]
+ignore = [
+    "A003",
+    "ANN002",
+    "ANN003",
+    "ANN401",
+    "C901",
+    "D100",
+    "D101",
+    "D102",
+    "D103",
+    "D104",
+    "D105",
+    "D106",
+    "D107",
+    "D203",
+    "D205",
+    "D212",
+    "ERA001",
+    "FA100",
+    "FA102",
+    "FBT001",
+    "FBT002",
+    "FIX002",
+    "I001",
+    "PLR0911",
+    "PLR0912",
+    "PLR0913",
+    "PLR0915",
+    "PLR5501",
+    "PLW0120",
+    "RUF001",
+    "TD002",
+    "TD003",
+    "TC006"
+]
+
 [tool.ruff.format]
 quote-style = "double"
 indent-style = "space"
